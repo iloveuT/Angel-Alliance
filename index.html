@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desafio de Aniversário de Namoro</title>
+    <link rel="shortcut icon" href="img/heart_icon.png">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Mea+Culpa&display=swap');
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            transition: opacity 0.5s ease;
+        }
+
+        h1 {
+            font-family: "Mea Culpa", serif;
+            font-weight: 350;
+            font-style: normal;
+            color: #d63384;
+            font-size: 5em;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        p {
+            font-size: 1.3em;
+            color: #333;
+            max-width: 600px;
+            padding: 0 20px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 12px 24px;
+            font-size: 1.2em;
+            background-color: #d63384;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button:hover {
+            background-color: #b0276a;
+            transform: scale(1.05);
+        }
+
+        .heart {
+            position: absolute;
+            color: rgba(255, 0, 100, 0.7);
+            font-size: 1.5em;
+            animation: float 5s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            50% { transform: translateY(-100px) scale(1.2); opacity: 0.7; }
+            100% { transform: translateY(-200px) scale(0.8); opacity: 0; }
+        }
+
+        .button-container {
+            position: relative;
+        }
+        
+        .button-container .heart {
+            position: absolute;
+            font-size: 1em;
+            animation: floatButton 1s linear infinite;
+        }
+
+        @keyframes floatButton {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(-20px); opacity: 0; }
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Desafio de Aniversário de Namoro</h1>
+    <p>Bem-vindo ao desafio especial para comemorar nosso amor! 💖</p>
+    <p>Clique no botão abaixo para iniciar sua jornada romântica!</p>
+    <div class="button-container">
+        <button id="startButton">Começar</button>
+    </div>
+
+    <script>
+        function criarCoraçao() {
+            const heart = document.createElement("div");
+            heart.innerHTML = "❤️";
+            heart.classList.add("heart");
+            document.body.appendChild(heart);
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.top = "100vh";
+            heart.style.animationDuration = Math.random() * 3 + 2 + "s";
+            setTimeout(() => heart.remove(), 5000);
+        }
+        setInterval(criarCoraçao, 500);
+
+        document.getElementById("startButton").addEventListener("mouseover", function() {
+            for (let i = 0; i < 5; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement("div");
+                    heart.innerHTML = "❤️";
+                    heart.classList.add("heart");
+                    heart.style.left = Math.random() * 80 + "px";
+                    heart.style.top = "0px";
+                    heart.style.animationDuration = "1s";
+                    document.querySelector(".button-container").appendChild(heart);
+                    setTimeout(() => heart.remove(), 1000);
+                }, i * 200);
+            }
+        });
+
+        document.getElementById("startButton").addEventListener("click", function(event) {
+            event.preventDefault();
+            document.body.style.opacity = "0";
+            setTimeout(() => {
+                window.location.href = "fase01.html";
+            }, 500);
+        });
+    </script>
+</body>
+</html>
