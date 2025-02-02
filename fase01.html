@@ -40,7 +40,7 @@
             font-family: Arial, sans-serif;
             text-align: center;
             padding: 20px;
-            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            background: linear-gradient(135deg, #ff758c, #ff7eb3);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -179,7 +179,23 @@
             line-height: 1.5;
         }
         
-        input, button { 
+        button {
+            margin-top: 20px;
+            padding: 15px 30px;
+            font-size: 1.3em;
+            font-weight: bold;
+            background: linear-gradient(90deg, #ff4a6e, #ff007f);
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 50px;
+            box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease-in-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        input { 
             border-radius: 10px;
             margin-top: 10px; 
             padding: 10px; 
@@ -283,7 +299,7 @@
 
         async function verificarBloqueio() {
             ipUsuario = await obterIP();
-            const bloqueio = JSON.parse(localStorage.getItem('bloqueio')) || {};
+            const bloqueio = JSON.parse(localStorage.getItem('bloqueiof01')) || {};
             if (bloqueio[ipUsuario] && Date.now() < bloqueio[ipUsuario]) {
                 iniciarContador(bloqueio[ipUsuario]);
                 return true;
@@ -304,16 +320,16 @@
                     }, 1000);
                 }, 5000);
             } else {
-                document.getElementById("mensagem").innerText = "Resposta errada! Você será bloqueado por 5 minutos.";
+                document.getElementById("mensagem").innerText = "Resposta errada! Você não poderá responder por 5 minutos.";
                 bloquearUsuario();
             }
         }
 
         function bloquearUsuario() {
             const desbloqueio = Date.now() + tempoBloqueio;
-            let bloqueio = JSON.parse(localStorage.getItem('bloqueio')) || {};
+            let bloqueio = JSON.parse(localStorage.getItem('bloqueiof01')) || {};
             bloqueio[ipUsuario] = desbloqueio;
-            localStorage.setItem('bloqueio', JSON.stringify(bloqueio));
+            localStorage.setItem('bloqueiof01', JSON.stringify(bloqueio));
             iniciarContador(desbloqueio);
         }
 
@@ -327,9 +343,9 @@
                     document.getElementById("timer").innerText = "Você pode tentar novamente.";
                     document.getElementById("resposta").disabled = false;
                     document.getElementById("timer").style.display = "none";
-                    let bloqueio = JSON.parse(localStorage.getItem('bloqueio')) || {};
+                    let bloqueio = JSON.parse(localStorage.getItem('bloqueiof01')) || {};
                     delete bloqueio[ipUsuario];
-                    localStorage.setItem('bloqueio', JSON.stringify(bloqueio));
+                    localStorage.setItem('bloqueiof01', JSON.stringify(bloqueio));
                 } else {
                     const minutos = Math.floor(tempoRestante / 60000);
                     const segundos = Math.floor((tempoRestante % 60000) / 1000);
