@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desafio Nº01</title>
+    <link rel="shortcut icon" href="img/heart_icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Mea+Culpa&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Micro+5+Charted&family=Pixelify+Sans:wght@400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playwrite+US+Trad:wght@100..400&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Open Sans', sans-serif;
+            scrollbar-width: thin;
+            scrollbar-color: #888 transparent;
+            scroll-behavior: smooth;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #888888;
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555555;
+        }
+
+        body { 
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #ff758c, #ff7eb3);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow-y: auto;
+            opacity: 0;
+            transition: opacity 0.5s ease-in;
+        }
+
+        .container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 50px;
+            background-color: rgba(255, 255, 255, 0.4);
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        h1 {
+            color: rgb(255, 29, 78);
+            font-size: 2.5em;
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+        a {
+            color: rgb(255, 29, 78);
+            text-decoration: none;
+            font-family: "Great Vibes", cursive;
+            font-weight: 300;
+            font-size: 1.5em;
+        }
+
+        .container h2 {
+            font-family: "Dancing Script", cursive;
+            font-size: 4em;
+            font-weight: bold;
+            color: rgb(154, 5, 37);
+            margin-bottom: 20px;
+        }
+
+        h3 {
+            font-family: "Great Vibes", cursive;
+            font-weight: 300;
+            font-size: 3.5em;
+            color: rgb(14, 0, 115);
+            margin-bottom: 30px;
+        }
+
+        #heart {
+            width: 200px;
+            height: 200px;
+            position: relative;
+            margin: 50px auto;
+            background-color: rgb(180, 36, 42);
+            transform: rotate(-45deg);
+            animation: pulse 1.5s infinite;
+        }
+        
+        #heart::before, #heart::after {
+            content: "";
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background-color: rgb(180, 36, 42);
+            border-radius: 50%;
+            z-index: 0; /* Mantém o formato do coração atrás do texto */
+        }
+        
+        #heart::before {
+            top: -100px;
+            left: 0;
+        }
+        
+        #heart::after {
+            left: 100px;
+            top: 0;
+        }
+        
+        /* Mantém o texto acima de tudo */
+        .heart-text {
+            position: absolute;
+            transform: rotate(45deg); /* Corrige a rotação do texto */
+            text-align: center;
+            font-size: 2.75em;
+            color: rgb(20, 20, 20);
+            font-weight: 400;
+            font-family: "Great Vibes", cursive;
+            z-index: 1; /* Garante que o texto fique sobreposto ao coração */
+            width: 100%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(45deg); /* Centraliza e mantém a rotação */
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1) rotate(-45deg); }
+            50% { transform: scale(1.2) rotate(-45deg); }
+            100% { transform: scale(1) rotate(-45deg); }
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        
+        .dec {
+            text-align: left; 
+        }
+
+        ul li {
+            font-family: "Great Vibes", cursive;
+            font-weight: 400;
+            font-style: normal;
+            color: #333;
+            list-style-type: none;
+            font-size: 1.5em;
+        }
+
+        li b {
+            font-family: "Great Vibes", cursive;
+            font-style: normal;
+            font-size: 1.7em;
+            
+        }
+
+        body p {
+            margin-top: 25px;
+            text-align: start;
+            font-size: 20px;
+            line-height: 1.5;
+        }
+        
+        button {
+            margin-top: 20px;
+            padding: 15px 30px;
+            font-size: 1.3em;
+            font-weight: bold;
+            background: linear-gradient(90deg, #ff4a6e, #ff007f);
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 50px;
+            box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease-in-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        input { 
+            border-radius: 10px;
+            margin-top: 10px; 
+            padding: 10px; 
+            font-size: 1.1em;
+            width: 250px;
+            text-align: center;
+        }
+        
+        #timer { 
+            color: red; 
+            font-size: 1.2em; 
+            display: none; 
+            margin-top: 20px;
+        }
+        
+    </style>
+</head>
+<body>
+    <h1>Você se lembra do <a href="https://iloveut.github.io/1-Month/">Primeiro Presente </a>que eu te dei?</h1>
+    <!-- Início do Código 1 (Incorporado) -->
+    <div class="container">
+        <h2>Nosso Amor em Ascensão: Um Mês de Felicidade</h1>
+        <h3>23 / 05 / 2024</h2>
+        <br>
+        <div id="heart">
+            <div class="heart-text">
+                T.R.L
+                <br>
+                +
+                <br>
+                T.A.C
+            </div>
+        </div>        
+        <div class="dec">
+            <ul>
+                <li>Meu amor,</li>
+                <br>
+                <li>
+                    Hoje completamos um mês juntos, e parece que foi ontem que nossos olhares se cruzaram e 
+                    nossos corações se conectaram. Cada dia ao seu lado tem sido uma aventura maravilhosa, 
+                    cheia de sorrisos, aprendizados e momentos inesquecíveis.
+                    <br>
+                    Você trouxe uma luz especial para minha vida, me fazendo sentir a pessoa mais feliz e 
+                    sortuda do mundo. Seu sorriso ilumina meus dias, seu abraço me aquece a alma e seu amor 
+                    me inspira a ser melhor a cada instante.
+                </li>
+                <br>
+                <li>
+                    Nesse primeiro mês, descobrimos juntos a beleza de um amor que cresce e se fortalece a 
+                    cada novo dia. Compartilhamos sonhos, medos, alegrias e desafios, construindo uma relação 
+                    baseada na confiança, respeito e carinho.
+                    <br>
+                    Ainda temos um longo caminho a percorrer, meu amor, mas tenho certeza de que, juntos, 
+                    superaremos qualquer obstáculo e viveremos momentos ainda mais incríveis. Que este seja 
+                    apenas o primeiro de muitos meses ao seu lado, celebrando o nosso amor e construindo uma 
+                    história linda e duradoura.
+                </li>
+                <br>
+                <li>Te amo mais do que palavras podem expressar!</li>
+                <br>
+                <li>Com todo meu amor,</li>
+                <br>
+                <li><b>Thomaz André de Camargo</b></li>
+                <br>
+            </ul>
+        </div>
+    </div>
+    <!--fim-->
+
+    <p>
+        Pois é...
+        <br>
+        Faz um bom tempo que te dei essa cartinha, óbvio isso é só uma parte dele...
+        <br>
+        Quando foi mesmo? 
+    </p>
+    <input type="text" id="resposta" placeholder="(DD/MM/AAAA)">
+    <button onclick="verificarResposta()">Verificar Resposta</button>
+    <p id="mensagem"></p>
+    <p id="timer"></p>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.body.style.opacity = "1";
+        });
+
+        const respostaCorreta = "23/06/2024";
+        const tempoBloqueio = 5 * 60 * 1000; //5 minutos em milissegundos
+        let ipUsuario;
+
+        async function obterIP() {
+            try {
+                const response = await fetch('https://api64.ipify.org?format=json');
+                const data = await response.json();
+                return data.ip;
+            } catch (error) {
+                console.error("Erro ao obter IP:", error);
+                return null;
+            }
+        }
+
+        async function verificarBloqueio() {
+            ipUsuario = await obterIP();
+            const bloqueio = JSON.parse(localStorage.getItem('bloqueiof01')) || {};
+            if (bloqueio[ipUsuario] && Date.now() < bloqueio[ipUsuario]) {
+                iniciarContador(bloqueio[ipUsuario]);
+                return true;
+            }
+            return false;
+        }
+
+        async function verificarResposta() {
+            if (await verificarBloqueio()) return;
+
+            const resposta = document.getElementById("resposta").value.trim();
+            if (resposta.toLowerCase() === respostaCorreta.toLowerCase()) {
+                document.getElementById("mensagem").innerText = "Resposta correta! Você será encaminhada para a próxima fase!";
+                setTimeout(function(){
+                    document.body.style.opacity = "0";
+                    setTimeout(function(){
+                        window.location.href = "61195026119502.html";
+                    }, 500);
+                }, 5000);
+            } else {
+                document.getElementById("mensagem").innerText = "Resposta errada! Você não poderá responder por 5 minutos.";
+                bloquearUsuario();
+            }
+        }
+
+        function bloquearUsuario() {
+            const desbloqueio = Date.now() + tempoBloqueio;
+            let bloqueio = JSON.parse(localStorage.getItem('bloqueiof01')) || {};
+            bloqueio[ipUsuario] = desbloqueio;
+            localStorage.setItem('bloqueiof01', JSON.stringify(bloqueio));
+            iniciarContador(desbloqueio);
+        }
+
+        function iniciarContador(desbloqueio) {
+            document.getElementById("resposta").disabled = true;
+            document.getElementById("timer").style.display = "block";
+            
+            function atualizarContador() {
+                const tempoRestante = desbloqueio - Date.now();
+                if (tempoRestante <= 0) {
+                    document.getElementById("timer").innerText = "Você pode tentar novamente.";
+                    document.getElementById("resposta").disabled = false;
+                    document.getElementById("timer").style.display = "none";
+                    let bloqueio = JSON.parse(localStorage.getItem('bloqueiof01')) || {};
+                    delete bloqueio[ipUsuario];
+                    localStorage.setItem('bloqueiof01', JSON.stringify(bloqueio));
+                } else {
+                    const minutos = Math.floor(tempoRestante / 60000);
+                    const segundos = Math.floor((tempoRestante % 60000) / 1000);
+                    document.getElementById("timer").innerText = `Tente novamente em ${minutos}m ${segundos}s`;
+                    setTimeout(atualizarContador, 1000);
+                }
+            }
+            atualizarContador();
+        }
+
+        window.onload = verificarBloqueio;
+    </script>
+</body>
+</html>

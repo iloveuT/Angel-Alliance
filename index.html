@@ -65,7 +65,7 @@
             position: absolute;
             color: rgba(255, 0, 100, 0.7);
             font-size: 1.5em;
-            animation: fall 5s linear infinite;
+            animation: fall 4s linear infinite;
         }
 
         @keyframes fall {
@@ -89,22 +89,24 @@
 
     <script>
         function criarCoraçao() {
-            const heart = document.createElement("div");
-            heart.innerHTML = "❤️";
-            heart.classList.add("heart");
-            document.body.appendChild(heart);
-            heart.style.left = Math.random() * 100 + "vw";
-            heart.style.top = "-10vh";
-            heart.style.animationDuration = Math.random() * 3 + 2 + "s";
-            setTimeout(() => heart.remove(), 5000);
+            for (let i = 0; i < 3; i++) { // Criar múltiplos corações por intervalo
+                const heart = document.createElement("div");
+                heart.innerHTML = "❤️";
+                heart.classList.add("heart");
+                document.body.appendChild(heart);
+                heart.style.left = Math.random() * 100 + "vw";
+                heart.style.top = "-12vh";
+                heart.style.animationDuration = Math.random() * 3 + 2 + "s";
+                setTimeout(() => heart.remove(), 5000);
+            }
         }
-        setInterval(criarCoraçao, 300);
+        setInterval(criarCoraçao, 80); // Diminuindo o intervalo para mais corações
 
         document.getElementById("startButton").addEventListener("click", function(event) {
             event.preventDefault();
             document.body.style.opacity = "0";
             setTimeout(() => {
-                window.location.href = "fase01.html";
+                window.location.href = "61195016119501.html";
             }, 500);
         });
     </script>
