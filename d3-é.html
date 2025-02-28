@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desafio Nº03</title>
+    <link rel="shortcut icon" href="img/heart_icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Mea+Culpa&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Micro+5+Charted&family=Pixelify+Sans:wght@400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
+        emailjs.init("G8yQrJsHnxmhrEoGu"); // Substitua pelo seu User ID do EmailJS
+    </script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playwrite+US+Trad:wght@100..400&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Open Sans', sans-serif;
+            scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(54, 54, 54, 0.5) transparent;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(54, 54, 54, 0.5);
+            border-radius: 10px;
+        }
+
+        ::-ms-scrollbar {
+            display: none; /* Esconde completamente */
+        }
+
+        body { 
+            -ms-overflow-style: none;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #ff758c, #ff7eb3);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow-y: auto;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 50px;
+            background-color: rgba(255, 255, 255, 0.4);
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        h1 {
+            color: rgb(255, 29, 78);
+            font-size: 5em;
+            margin-top: 50px;
+            margin-bottom: 30px;
+            font-family: "Great Vibes", cursive;
+            font-weight: 300;
+        }
+
+        h2 {
+            color: rgb(171, 0, 250);
+            font-size: 2em;
+            font-family: "Great Vibes", cursive;
+            font-weight: 300;
+        }
+
+        #main {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 1.5em;
+            line-height: 2.5;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 300;
+        }
+        
+        p {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 1.5em;
+            line-height: 2.5;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 300;
+        }
+
+        #obs {
+            display: block;
+            text-align: center;
+            font-size: 1em;
+            font-weight: 300;
+            font-family: 'Open Sans', sans-serif;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            overflow: hidden;
+            transition: opacity 0.85s ease-in-out, max-height 0.8s ease-in-out;
+        }
+
+        textarea {
+            border-radius: 10px;
+            margin-top: 25px;
+            padding: 10px;
+            font-size: 1.1em;
+            width: 100%;
+            max-width: 500px;
+            min-height: 50px;
+            max-height: 200px;
+            place-content: center;
+            text-align: center;
+            resize: none; /* Impede redimensionamento manual */
+            overflow-y: hidden; /* Esconde a barra de rolagem vertical */
+        }        
+
+        button {
+            margin-top: 20px;
+            padding: 15px 30px;
+            font-size: 1.3em;
+            font-weight: bold;
+            background: linear-gradient(90deg, #ff4a6e, #ff007f);
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 20px;
+            box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease-in-out; 
+            position: relative;
+            overflow: hidden;
+        }
+
+        button:hover {
+            background: linear-gradient(90deg, #ff007f, #ff4a6e);
+            transform: scale(1.1);
+        }
+
+        input { 
+            border-radius: 10px;
+            margin-top: 25px; 
+            padding: 10px; 
+            font-size: 1.1em;
+            width: 250px;
+            text-align: center;
+        }
+        
+        #timer { 
+            color: red; 
+            font-size: 1.2em; 
+            display: none; 
+            margin-top: 20px;
+        }
+
+        #mostrarObs {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            font-size: 1em;
+            font-weight: bold;
+            background: linear-gradient(90deg, #ff4a6e, #ff007f);
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 50px;
+            box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease-in-out;
+        }
+        
+        #mostrarObs:hover {
+            background: linear-gradient(90deg, #ff007f, #ff4a6e);
+            transform: scale(1.1);
+        }
+        
+    </style>
+</head>
+<body>
+    <h1>Agora vamos algo mais <br> diretamente relacionado a nós...</h1>
+
+    <h2>Decifre a frase a seguir:</h2>
+    
+    <p id="main">
+        Rau oaya eq a fqyba fuhqeeq bmdmpa.
+    </p>
+    
+    <p id="obs">  <!--Dica-->
+        Cifra do quarto imperador romano com o número positivamente aproximado de meses que estamos juntos.
+    </p>
+    
+    <textarea id="resposta" placeholder="Digite sua resposta aqui" autocomplete="off"></textarea>
+    <button onclick="verificarResposta()">Verificar Resposta</button>
+    <p id="mensagem"></p>
+    <p id="timer"></p>
+    
+    <button id="mostrarObs">Dica</button>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.body.style.opacity = "1";    // Exibe o conteúdo
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const textarea = document.getElementById("resposta");
+        
+            function ajustarAltura() {
+                textarea.style.height = "auto"; // Redefine a altura
+                textarea.style.height = textarea.scrollHeight + "px"; // Ajusta para o conteúdo
+            }
+        
+            textarea.addEventListener("input", ajustarAltura);
+            ajustarAltura();
+        });        
+
+        const respostaCorreta = "Foi como se o tempo tivesse parado.";
+        const tempoBloqueio = 1 * 60 * 1000; //1 minuto em milissegundos
+        let ipUsuario;
+
+        async function obterIP() {
+            try {
+                const response = await fetch('https://api64.ipify.org?format=json');
+                const data = await response.json();
+                return data.ip;
+            } catch (error) {
+                console.error("Erro ao obter IP:", error);
+                return null;
+            }
+        }
+
+        async function verificarBloqueio() {
+            ipUsuario = await obterIP(); // Obtem o IP do usuário
+            const bloqueio = JSON.parse(localStorage.getItem('bloqueiof03')) || {};
+            if (bloqueio[ipUsuario] && Date.now() < bloqueio[ipUsuario]) {
+                iniciarContador(bloqueio[ipUsuario]); // Inicia o contador de bloqueio
+                return true;
+            }
+            return false;
+        }
+
+        async function verificarResposta() {
+            if (await verificarBloqueio()) return;
+
+            const resposta = document.getElementById("resposta").value.trim();
+            if (resposta.toLowerCase() === respostaCorreta.toLowerCase()) {
+                document.getElementById("mensagem").innerText = "Resposta correta! Você será encaminhada para a próxima fase!";
+                setTimeout(function(){
+                    document.body.style.opacity = "0";
+                    setTimeout(function(){
+                        window.location.href = "d4-a.html";
+                    }, 500);
+                }, 3500);
+            } else {
+                document.getElementById("mensagem").innerText = "Resposta errada! Você não poderá responder por 1 minuto.";
+                bloquearUsuario();
+            }
+        }
+
+        function bloquearUsuario() {
+            const desbloqueio = Date.now() + tempoBloqueio;
+            let bloqueio = JSON.parse(localStorage.getItem('bloqueiof03')) || {};
+            bloqueio[ipUsuario] = desbloqueio;
+            localStorage.setItem('bloqueiof03', JSON.stringify(bloqueio));
+            iniciarContador(desbloqueio);
+        }
+
+        function iniciarContador(desbloqueio) {
+            document.getElementById("resposta").disabled = true;
+            document.getElementById("timer").style.display = "block";
+            
+            function atualizarContador() {
+                const tempoRestante = desbloqueio - Date.now();
+                if (tempoRestante <= 0) {
+                    document.getElementById("timer").innerText = "Você pode tentar novamente.";
+                    document.getElementById("resposta").disabled = false;
+                    document.getElementById("timer").style.display = "none";
+                    let bloqueio = JSON.parse(localStorage.getItem('bloqueiof03')) || {};
+                    delete bloqueio[ipUsuario];
+                    localStorage.setItem('bloqueiof03', JSON.stringify(bloqueio));
+                } else {
+                    const minutos = Math.floor(tempoRestante / 60000);
+                    const segundos = Math.floor((tempoRestante % 60000) / 1000);
+                    document.getElementById("timer").innerText = `Tente novamente em ${minutos}m ${segundos}s`;
+                    setTimeout(atualizarContador, 1000);
+                }
+            }
+            atualizarContador();
+        }
+
+        window.onload = verificarBloqueio;
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const obs = document.getElementById("obs");
+            const botao = document.getElementById("mostrarObs");
+        
+            botao.addEventListener("click", function () {
+                if (obs.style.opacity === "0" || obs.style.opacity === "") {
+                    obs.style.maxHeight = "500px"; // Ajuste conforme necessário
+                    obs.style.opacity = "1";
+                } else {
+                    obs.style.maxHeight = "0";
+                    obs.style.opacity = "0";
+                }
+            });
+        });
+        
+    </script>
+</body>
+</html>
