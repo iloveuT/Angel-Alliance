@@ -215,7 +215,17 @@
     
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            document.body.style.opacity = "1";    // Exibe o conteúdo
+            document.body.style.opacity = "0"; // Garante que começa invisível
+            let opacidade = 0;
+    
+            let fadeIn = setInterval(() => {
+                if (opacidade < 1) {
+                    opacidade += 0.05;
+                    document.body.style.opacity = opacidade.toFixed(1); // Ajusta com 1 casa decimal
+                } else {
+                    clearInterval(fadeIn); // Para o loop quando atingir 1
+                }
+            }, 30); // Atualiza a cada 50ms
         });
 
         document.addEventListener("DOMContentLoaded", function () {
