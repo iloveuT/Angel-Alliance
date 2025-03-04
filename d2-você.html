@@ -81,7 +81,7 @@
         h2 {
             color: rgb(171, 0, 250);
             font-size: 2em;
-            font-family: "Great Vibes", cursive;
+            font-family: "Dancing Script", cursive;
             font-weight: 300;
         }
 
@@ -210,6 +210,7 @@
     <button onclick="verificarResposta()">Verificar Resposta</button>
     <p id="mensagem"></p>
     <p id="timer"></p>
+    <div id="end"></div>
     
     <button id="mostrarObs">Dica</button>
     
@@ -270,7 +271,9 @@
 
             const resposta = document.getElementById("resposta").value.trim();
             if (resposta.toLowerCase() === respostaCorreta.toLowerCase()) {
+                document.getElementById("mensagem").style.display = "block";
                 document.getElementById("mensagem").innerText = "Resposta correta! Você será encaminhada para a próxima fase!";
+                window.location.href = "#end";
                 setTimeout(function(){
                     document.body.style.opacity = "0";
                     setTimeout(function(){
@@ -278,8 +281,12 @@
                     }, 500);
                 }, 3500);
             } else {
+                document.getElementById("mensagem").style.display = "block";
                 document.getElementById("mensagem").innerText = "Resposta errada! Você não poderá responder por 1 minuto.";
                 bloquearUsuario();
+                setTimeout(function(){
+                        window.location.href = "#timer";
+                    }, 10);
             }
         }
 
@@ -301,6 +308,7 @@
                     document.getElementById("timer").innerText = "Você pode tentar novamente.";
                     document.getElementById("resposta").disabled = false;
                     document.getElementById("timer").style.display = "none";
+                    document.getElementById("mensagem").style.display = "none";
                     let bloqueio = JSON.parse(localStorage.getItem('bloqueiof02')) || {};
                     delete bloqueio[ipUsuario];
                     localStorage.setItem('bloqueiof02', JSON.stringify(bloqueio));

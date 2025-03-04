@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Desafio Nº04</title>
+    <title>Desafio Nº06</title>
     <link rel="shortcut icon" href="img/heart_icon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -111,7 +111,6 @@
         }
         
         textarea {
-            place-content: center;
             border-radius: 10px;
             margin-top: 25px;
             padding: 10px;
@@ -120,6 +119,7 @@
             max-width: 500px;
             min-height: 50px;
             max-height: 200px;
+            place-content: center;
             text-align: center;
             resize: none; /* Impede redimensionamento manual */
             overflow-y: hidden; /* Esconde a barra de rolagem vertical */
@@ -186,26 +186,21 @@
     </style>
 </head>
 <body>
-    <h1>Esse vai demorar um pouco:</h1>
+    <h1>Bem tranquilo né?</h1>
 
-    <h2>Você sabe o que fazer...</h2>
+    <h2>Será que no final você vai lembrar de tudo?</h2>
 
     <p id="main">
-        01010011 01100101 01110101 01110011 00100000 01101100 11100001 01100010 01101001 01101111 
-        01110011 00100000 01101101 01100001 01100011 01101001 01101111 01110011 00100000 01110100 
-        01101111 01100011 01100001 01110010 01100001 01101101 00100000 01101111 01110011 00100000 
-        01101101 01100101 01110101 01110011 00101100 00100000 01100101 00100000 01100101 01101101 
-        00100000 01110101 01101101 01100001 00100000 01100110 01110010 01100001 11100111 11100011 
-        01101111 00100000 01100100 01100101 00100000 01110011 01100101 01100111 01110101 01101110 
-        01100100 01101111 00101100 00100000 01101111 00100000 01101101 01110101 01101110 01100100 
-        01101111 00100000 01100001 01101111 00100000 01110010 01100101 01100100 01101111 01110010 
-        00100000 01110011 01101001 01101101 01110000 01101100 01100101 01110011 01101101 01100101 
-        01101110 01110100 01100101 00100000 01100100 01100101 01110011 01100001 01110000 01100001 
-        01110010 01100101 01100011 01100101 01110101 00101110 
+        69 110 116 114 101 32 111 115 32 99 111 114 114 101 100 111 114 101 115 32 100 97 32 101 115 99 111 
+        108 97 44 32 97 32 97 103 105 116 97 195 167 195 163 111 32 100 97 32 109 97 110 104 195 163 32 115 
+        101 32 97 112 97 103 111 117 44 32 101 32 116 117 100 111 32 111 32 113 117 101 32 114 101 115 116 111 
+        117 32 102 111 105 32 111 32 99 97 108 111 114 32 100 111 32 115 101 117 32 111 108 104 97 114 32 101 
+        32 97 32 105 110 116 101 110 115 105 100 97 100 101 32 100 111 32 115 101 117 32 98 101 105 106 111 46
     </p>
 
     <p id="obs">
-        Respeite sempre a pontuação...
+        Parece uma sequência de números aleatórios, não é mesmo? Mas, na verdade, é uma mensagem codificada em decimal. <br>
+        O nome dessa criptografia comea com "A" e termina com "i".
     </p>
     
     <textarea id="resposta" placeholder="Digite sua resposta aqui" autocomplete="off"></textarea>
@@ -243,7 +238,7 @@
             ajustarAltura();
         });        
 
-        const respostaCorreta = "Seus lábios macios tocaram os meus, e em uma fração de segundo, o mundo ao redor simplesmente desapareceu.";
+        const respostaCorreta = "Entre os corredores da escola, a agitação da manhã se apagou, e tudo o que restou foi o calor do seu olhar e a intensidade do seu beijo.";
         const tempoBloqueio = 1 * 60 * 1000; //1 minuto em milissegundos
         let ipUsuario;
 
@@ -260,7 +255,7 @@
 
         async function verificarBloqueio() {
             ipUsuario = await obterIP(); // Obtem o IP do usuário
-            const bloqueio = JSON.parse(localStorage.getItem('bloqueiof04')) || {};
+            const bloqueio = JSON.parse(localStorage.getItem('bloqueiof06')) || {};
             if (bloqueio[ipUsuario] && Date.now() < bloqueio[ipUsuario]) {
                 iniciarContador(bloqueio[ipUsuario]); // Inicia o contador de bloqueio
                 return true;
@@ -279,7 +274,7 @@
                 setTimeout(function(){
                     document.body.style.opacity = "0";
                     setTimeout(function(){
-                        window.location.href = "d5-melhor.html";
+                        window.location.href = "d7-que.html";
                     }, 500);
                 }, 3500);
             } else {
@@ -294,9 +289,9 @@
 
         function bloquearUsuario() {
             const desbloqueio = Date.now() + tempoBloqueio;
-            let bloqueio = JSON.parse(localStorage.getItem('bloqueiof04')) || {};
+            let bloqueio = JSON.parse(localStorage.getItem('bloqueiof06')) || {};
             bloqueio[ipUsuario] = desbloqueio;
-            localStorage.setItem('bloqueiof04', JSON.stringify(bloqueio));
+            localStorage.setItem('bloqueiof06', JSON.stringify(bloqueio));
             iniciarContador(desbloqueio);
         }
 
@@ -311,9 +306,9 @@
                     document.getElementById("resposta").disabled = false;
                     document.getElementById("timer").style.display = "none";
                     document.getElementById("mensagem").style.display = "none";
-                    let bloqueio = JSON.parse(localStorage.getItem('bloqueiof04')) || {};
+                    let bloqueio = JSON.parse(localStorage.getItem('bloqueiof06')) || {};
                     delete bloqueio[ipUsuario];
-                    localStorage.setItem('bloqueiof04', JSON.stringify(bloqueio));
+                    localStorage.setItem('bloqueiof06', JSON.stringify(bloqueio));
                 } else {
                     const minutos = Math.floor(tempoRestante / 60000);
                     const segundos = Math.floor((tempoRestante % 60000) / 1000);

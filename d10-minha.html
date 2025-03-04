@@ -3,12 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Desafio Nº04</title>
+    <title>Desafio Nº10</title>
     <link rel="shortcut icon" href="img/heart_icon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Mea+Culpa&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Micro+5+Charted&family=Pixelify+Sans:wght@400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
+        emailjs.init("G8yQrJsHnxmhrEoGu"); // Substitua pelo seu User ID do EmailJS
+    </script>
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playwrite+US+Trad:wght@100..400&display=swap');
@@ -18,9 +23,9 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Open Sans', sans-serif;
-            scrollbar-width: thin;
-            scrollbar-color: #ff006a transparent;
             scroll-behavior: smooth;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(54, 54, 54, 0.5) transparent;
         }
 
         ::-webkit-scrollbar-track {
@@ -28,15 +33,16 @@
         }
 
         ::-webkit-scrollbar-thumb {
-            background: #888888;
+            background: rgba(54, 54, 54, 0.5);
             border-radius: 10px;
         }
 
-        ::-webkit-scrollbar-thumb:hover {
-            background: #555555;
+        ::-ms-scrollbar {
+            display: none; /* Esconde completamente */
         }
 
         body { 
+            -ms-overflow-style: none;
             font-family: Arial, sans-serif;
             text-align: center;
             padding: 20px;
@@ -73,9 +79,9 @@
         }
 
         h2 {
-            color: rgb(171, 0, 250);
+            color: rgb(87, 0, 250);
             font-size: 2em;
-            font-family: "Dancing Script", cursive;
+            font-family: "Great Vibes", cursive;
             font-weight: 300;
         }
 
@@ -84,19 +90,10 @@
             text-align: center;
             font-size: 1.5em;
             line-height: 2.5;
-            font-family: 'Open Sans', sans-serif;
+            font-family: "Great Vibes", cursive;
             font-weight: 300;
         }
         
-        p {
-            margin-top: 25px;
-            text-align: center;
-            font-size: 1.5em;
-            line-height: 2.5;
-            font-family: 'Open Sans', sans-serif;
-            font-weight: 300;
-        }
-
         #obs {
             display: block;
             text-align: center;
@@ -109,9 +106,8 @@
             overflow: hidden;
             transition: opacity 0.85s ease-in-out, max-height 0.8s ease-in-out;
         }
-        
+
         textarea {
-            place-content: center;
             border-radius: 10px;
             margin-top: 25px;
             padding: 10px;
@@ -120,6 +116,7 @@
             max-width: 500px;
             min-height: 50px;
             max-height: 200px;
+            place-content: center;
             text-align: center;
             resize: none; /* Impede redimensionamento manual */
             overflow-y: hidden; /* Esconde a barra de rolagem vertical */
@@ -136,13 +133,13 @@
             cursor: pointer;
             border-radius: 20px;
             box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease-in-out;
+            transition: transform 0.3s ease-in-out; 
             position: relative;
             overflow: hidden;
         }
 
         button:hover {
-            background: linear-gradient(90deg, #ff006f, #ff005f);
+            background: linear-gradient(90deg, #ff007f, #ff4a6e);
             transform: scale(1.1);
         }
 
@@ -154,14 +151,14 @@
             width: 250px;
             text-align: center;
         }
-
+        
         #timer { 
             color: red; 
             font-size: 1.2em; 
             display: none; 
             margin-top: 20px;
         }
-        
+
         #mostrarObs {
             position: fixed;
             bottom: 20px;
@@ -186,35 +183,24 @@
     </style>
 </head>
 <body>
-    <h1>Esse vai demorar um pouco:</h1>
+    <h1>Decifre a frase a seguir:</h1>
 
-    <h2>Você sabe o que fazer...</h2>
-
+    <h2>Lembrar de uma data é fácil! Agora vamos complicar as coisas.</h2>
+    
     <p id="main">
-        01010011 01100101 01110101 01110011 00100000 01101100 11100001 01100010 01101001 01101111 
-        01110011 00100000 01101101 01100001 01100011 01101001 01101111 01110011 00100000 01110100 
-        01101111 01100011 01100001 01110010 01100001 01101101 00100000 01101111 01110011 00100000 
-        01101101 01100101 01110101 01110011 00101100 00100000 01100101 00100000 01100101 01101101 
-        00100000 01110101 01101101 01100001 00100000 01100110 01110010 01100001 11100111 11100011 
-        01101111 00100000 01100100 01100101 00100000 01110011 01100101 01100111 01110101 01101110 
-        01100100 01101111 00101100 00100000 01101111 00100000 01101101 01110101 01101110 01100100 
-        01101111 00100000 01100001 01101111 00100000 01110010 01100101 01100100 01101111 01110010 
-        00100000 01110011 01101001 01101101 01110000 01101100 01100101 01110011 01101101 01100101 
-        01101110 01110100 01100101 00100000 01100100 01100101 01110011 01100001 01110000 01100001 
-        01110010 01100101 01100011 01100101 01110101 00101110 
+        
     </p>
-
-    <p id="obs">
-        Respeite sempre a pontuação...
+    
+    <p id="obs">  <!--Dica-->
+        
     </p>
     
     <textarea id="resposta" placeholder="Digite sua resposta aqui" autocomplete="off"></textarea>
     <button onclick="verificarResposta()">Verificar Resposta</button>
     <p id="mensagem"></p>
     <p id="timer"></p>
-    <div id="end"></div>
-
-    <button id="mostrarObs">Dica</button>
+    
+    <button id="mostrarObs">Obs</button>
     
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -243,7 +229,7 @@
             ajustarAltura();
         });        
 
-        const respostaCorreta = "Seus lábios macios tocaram os meus, e em uma fração de segundo, o mundo ao redor simplesmente desapareceu.";
+        const respostaCorreta = "Era dia 23 de maio quando o mundo parou e só existia você. Entre os corredores da escola, a agitação da manhã se apagou, e tudo o que restou foi o calor do seu olhar e a intensidade do seu beijo. Lembra? Aquele instante, entre a correria da manhã e a expectativa pela aula, se transformou em um universo só nosso. Seus lábios macios tocaram os meus, e em uma fração de segundo, o mundo ao redor simplesmente desapareceu. Foi como se o tempo tivesse parado. Aquele beijo carregava a promessa de um novo dia, a esperança de um futuro juntos e a certeza de que nossos sentimentos eram intensos e verdadeiros. A cada segundo que passa, aquele beijo ecoa em meu coração. É como se um raio de sol tivesse iluminado meu dia, aquecendo minha alma e me enchendo de alegria. Agradeço por esse momento mágico, por ter você ao meu lado e por cada beijo que ainda vamos trocar. Eu a amo, minha princesa.";
         const tempoBloqueio = 1 * 60 * 1000; //1 minuto em milissegundos
         let ipUsuario;
 
@@ -260,7 +246,7 @@
 
         async function verificarBloqueio() {
             ipUsuario = await obterIP(); // Obtem o IP do usuário
-            const bloqueio = JSON.parse(localStorage.getItem('bloqueiof04')) || {};
+            const bloqueio = JSON.parse(localStorage.getItem('bloqueiof10')) || {};
             if (bloqueio[ipUsuario] && Date.now() < bloqueio[ipUsuario]) {
                 iniciarContador(bloqueio[ipUsuario]); // Inicia o contador de bloqueio
                 return true;
@@ -273,31 +259,38 @@
 
             const resposta = document.getElementById("resposta").value.trim();
             if (resposta.toLowerCase() === respostaCorreta.toLowerCase()) {
-                document.getElementById("mensagem").style.display = "block";
                 document.getElementById("mensagem").innerText = "Resposta correta! Você será encaminhada para a próxima fase!";
-                window.location.href = "#end";
+
+                enviarEmail();  // Envia o e-mail pra mim
+
                 setTimeout(function(){
                     document.body.style.opacity = "0";
                     setTimeout(function(){
-                        window.location.href = "d5-melhor.html";
+                        window.location.href = "end-vida.html";
                     }, 500);
                 }, 3500);
             } else {
-                document.getElementById("mensagem").style.display = "block";
                 document.getElementById("mensagem").innerText = "Resposta errada! Você não poderá responder por 1 minuto.";
                 bloquearUsuario();
-                setTimeout(function(){
-                        window.location.href = "#timer";
-                    }, 10);
             }
         }
 
         function bloquearUsuario() {
             const desbloqueio = Date.now() + tempoBloqueio;
-            let bloqueio = JSON.parse(localStorage.getItem('bloqueiof04')) || {};
+            let bloqueio = JSON.parse(localStorage.getItem('bloqueiof10')) || {};
             bloqueio[ipUsuario] = desbloqueio;
-            localStorage.setItem('bloqueiof04', JSON.stringify(bloqueio));
+            localStorage.setItem('bloqueiof10', JSON.stringify(bloqueio));
             iniciarContador(desbloqueio);
+        }
+        
+        // Função para enviar o e-mail
+        function enviarEmail() {
+            emailjs.send("personal_gmail", "template_conc_fase_10") //alterar service e template pra cada necessidade
+                .then(function(response) {
+                    console.log("E-mail enviado com sucesso!", response.status, response.text);
+                }, function(error) {
+                    console.error("Erro ao enviar o e-mail:", error);
+                });
         }
 
         function iniciarContador(desbloqueio) {
@@ -310,10 +303,9 @@
                     document.getElementById("timer").innerText = "Você pode tentar novamente.";
                     document.getElementById("resposta").disabled = false;
                     document.getElementById("timer").style.display = "none";
-                    document.getElementById("mensagem").style.display = "none";
-                    let bloqueio = JSON.parse(localStorage.getItem('bloqueiof04')) || {};
+                    let bloqueio = JSON.parse(localStorage.getItem('bloqueiof10')) || {};
                     delete bloqueio[ipUsuario];
-                    localStorage.setItem('bloqueiof04', JSON.stringify(bloqueio));
+                    localStorage.setItem('bloqueiof10', JSON.stringify(bloqueio));
                 } else {
                     const minutos = Math.floor(tempoRestante / 60000);
                     const segundos = Math.floor((tempoRestante % 60000) / 1000);

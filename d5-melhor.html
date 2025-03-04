@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Desafio Nº04</title>
+    <title>Desafio Nº05</title>
     <link rel="shortcut icon" href="img/heart_icon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -73,6 +73,7 @@
         }
 
         h2 {
+            margin-top: 25px;
             color: rgb(171, 0, 250);
             font-size: 2em;
             font-family: "Dancing Script", cursive;
@@ -82,7 +83,7 @@
         #main {
             margin-top: 25px;
             text-align: center;
-            font-size: 1.5em;
+            font-size: 1.45em;
             line-height: 2.5;
             font-family: 'Open Sans', sans-serif;
             font-weight: 300;
@@ -111,7 +112,6 @@
         }
         
         textarea {
-            place-content: center;
             border-radius: 10px;
             margin-top: 25px;
             padding: 10px;
@@ -154,6 +154,10 @@
             width: 250px;
             text-align: center;
         }
+        
+        textarea {
+            place-content: center;
+        }
 
         #timer { 
             color: red; 
@@ -182,30 +186,63 @@
             background: linear-gradient(90deg, #ff007f, #ff4a6e);
             transform: scale(1.1);
         }
+
+        img {
+            width: 100%;
+            max-width: 400px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        b {
+            color: rgb(255, 0, 234);
+            background-color: rgba(233, 233, 233, 0.3);
+            border-radius: 5px;
+            padding-left: 5px;
+            padding-right: 5px;
+        }
+
+        #hidden {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 117, 140, 0.3); /* Cor semelhante ao fundo */
+            color: rgba(0, 0, 0, 0.2); /* Quase invisível */
+            border-radius: 5px;
+            padding: 5px 10px 10px 100px;
+            font-size: 0.2em;
+            opacity: 0.2; /* Mantém discreto */
+            transition: opacity 0.3s ease-in-out, font-size 0.3s ease-in-out, color 0.3s ease-in-out;
+        }
+
+        #hidden:hover {
+            opacity: 1; /* Fica visível ao passar o mouse */
+            font-size: 0.9em;
+            color: black;
+        }
+
+        a {
+            text-decoration: none;
+        }
         
     </style>
 </head>
 <body>
-    <h1>Esse vai demorar um pouco:</h1>
-
-    <h2>Você sabe o que fazer...</h2>
+    <div id="hidden">
+        <a href="https://site112.com/cifra-de-vigenere-codificar-descodificar" target="about:blank">site112.com</a> é a melhor forma de decodificar essa mensagem.
+    </div>
+    <h1>Essa foto é de um dia muito importante...</h1>
+    <img src="img/d5.jpg">
+    
+    <h2>Esse é mais difícil do que a Cifra de César</h2>
 
     <p id="main">
-        01010011 01100101 01110101 01110011 00100000 01101100 11100001 01100010 01101001 01101111 
-        01110011 00100000 01101101 01100001 01100011 01101001 01101111 01110011 00100000 01110100 
-        01101111 01100011 01100001 01110010 01100001 01101101 00100000 01101111 01110011 00100000 
-        01101101 01100101 01110101 01110011 00101100 00100000 01100101 00100000 01100101 01101101 
-        00100000 01110101 01101101 01100001 00100000 01100110 01110010 01100001 11100111 11100011 
-        01101111 00100000 01100100 01100101 00100000 01110011 01100101 01100111 01110101 01101110 
-        01100100 01101111 00101100 00100000 01101111 00100000 01101101 01110101 01101110 01100100 
-        01101111 00100000 01100001 01101111 00100000 01110010 01100101 01100100 01101111 01110010 
-        00100000 01110011 01101001 01101101 01110000 01101100 01100101 01110011 01101101 01100101 
-        01101110 01110100 01100101 00100000 01100100 01100101 01110011 01100001 01110000 01100001 
-        01110010 01100101 01100011 01100101 01110101 00101110 
+        Lrsfca? Nwyplr ordtntxp, eazvp a puvceeoe oa zgrsã e n kbaepzeeiig tpln gywa, fk xcaayjzrzuy pm hs yyiikvdo fó tsdsb. 
     </p>
 
     <p id="obs">
-        Respeite sempre a pontuação...
+        Vigenère diz que a chave é: <br>
+        <b>ANGEL</b>
     </p>
     
     <textarea id="resposta" placeholder="Digite sua resposta aqui" autocomplete="off"></textarea>
@@ -227,6 +264,7 @@
                     document.body.style.opacity = opacidade.toFixed(1); // Ajusta com 1 casa decimal
                 } else {
                     clearInterval(fadeIn); // Para o loop quando atingir 1
+                    document.getElementById("mensagem").style.display = "block";
                 }
             }, 30); // Atualiza a cada 50ms
         });
@@ -243,8 +281,9 @@
             ajustarAltura();
         });        
 
-        const respostaCorreta = "Seus lábios macios tocaram os meus, e em uma fração de segundo, o mundo ao redor simplesmente desapareceu.";
+        const respostaCorreta = "Lembra? Aquele instante, entre a correria da manhã e a expectativa pela aula, se transformou em um universo só nosso.";
         const tempoBloqueio = 1 * 60 * 1000; //1 minuto em milissegundos
+        var tentativas = 0;
         let ipUsuario;
 
         async function obterIP() {
@@ -260,7 +299,7 @@
 
         async function verificarBloqueio() {
             ipUsuario = await obterIP(); // Obtem o IP do usuário
-            const bloqueio = JSON.parse(localStorage.getItem('bloqueiof04')) || {};
+            const bloqueio = JSON.parse(localStorage.getItem('bloqueiof05')) || {};
             if (bloqueio[ipUsuario] && Date.now() < bloqueio[ipUsuario]) {
                 iniciarContador(bloqueio[ipUsuario]); // Inicia o contador de bloqueio
                 return true;
@@ -279,7 +318,7 @@
                 setTimeout(function(){
                     document.body.style.opacity = "0";
                     setTimeout(function(){
-                        window.location.href = "d5-melhor.html";
+                        window.location.href = "d6-coisa.html";
                     }, 500);
                 }, 3500);
             } else {
@@ -289,14 +328,18 @@
                 setTimeout(function(){
                         window.location.href = "#timer";
                     }, 10);
+                tentativas = tentativas + 1;
+                if (tentativas >= 3) {
+                    alert("Vi que está tendo dificuldades. Há algo escondido na página que será de grande ajuda.");
+                }
             }
         }
 
         function bloquearUsuario() {
             const desbloqueio = Date.now() + tempoBloqueio;
-            let bloqueio = JSON.parse(localStorage.getItem('bloqueiof04')) || {};
+            let bloqueio = JSON.parse(localStorage.getItem('bloqueiof05')) || {};
             bloqueio[ipUsuario] = desbloqueio;
-            localStorage.setItem('bloqueiof04', JSON.stringify(bloqueio));
+            localStorage.setItem('bloqueiof05', JSON.stringify(bloqueio));
             iniciarContador(desbloqueio);
         }
 
@@ -311,9 +354,9 @@
                     document.getElementById("resposta").disabled = false;
                     document.getElementById("timer").style.display = "none";
                     document.getElementById("mensagem").style.display = "none";
-                    let bloqueio = JSON.parse(localStorage.getItem('bloqueiof04')) || {};
+                    let bloqueio = JSON.parse(localStorage.getItem('bloqueiof05')) || {};
                     delete bloqueio[ipUsuario];
-                    localStorage.setItem('bloqueiof04', JSON.stringify(bloqueio));
+                    localStorage.setItem('bloqueiof05', JSON.stringify(bloqueio));
                 } else {
                     const minutos = Math.floor(tempoRestante / 60000);
                     const segundos = Math.floor((tempoRestante % 60000) / 1000);
@@ -325,6 +368,52 @@
         }
 
         window.onload = verificarBloqueio;
+
+        // Copia o texto do <b> para a área de transferência
+        document.addEventListener("DOMContentLoaded", function () {
+            const boldElement = document.querySelector("b");
+
+            boldElement.addEventListener("click", function () {
+                const texto = this.innerText;
+
+                // Copia o texto para a área de transferência
+                navigator.clipboard.writeText(texto).then(() => {
+                    // Cria o tooltip (caixa de diálogo)
+                    const tooltip = document.createElement("div");
+                    tooltip.innerText = "Copiado!";
+                    tooltip.style.position = "absolute";
+                    tooltip.style.background = "#ff007f";
+                    tooltip.style.color = "#fff";
+                    tooltip.style.padding = "5px 10px";
+                    tooltip.style.borderRadius = "5px";
+                    tooltip.style.fontSize = "0.9em";
+                    tooltip.style.boxShadow = "0px 4px 10px rgba(0, 0, 0, 0.2)";
+                    tooltip.style.transition = "opacity 0.3s ease-in-out";
+                    tooltip.style.opacity = "0";
+                    tooltip.style.pointerEvents = "none";
+                    tooltip.style.whiteSpace = "nowrap"; // Evita quebra de linha
+
+                    // Posiciona o tooltip acima do <b>
+                    const rect = boldElement.getBoundingClientRect();
+                    const tooltipWidth = 80; // Largura aproximada do tooltip
+                    tooltip.style.left = `${rect.left + window.scrollX + (rect.width / 2) - (tooltipWidth / 2)}px`;
+                    tooltip.style.top = `${rect.top + window.scrollY - 30}px`;
+
+                    document.body.appendChild(tooltip);
+                    requestAnimationFrame(() => (tooltip.style.opacity = "1"));
+
+                    // Remove o tooltip após 1.5 segundos
+                    setTimeout(() => {
+                        tooltip.style.opacity = "0";
+                        setTimeout(() => tooltip.remove(), 300);
+                    }, 1500);
+                }).catch(err => {
+                    console.error("Erro ao copiar texto: ", err);
+                });
+            });
+        });
+
+
 
         document.addEventListener("DOMContentLoaded", function () {
             const obs = document.getElementById("obs");
