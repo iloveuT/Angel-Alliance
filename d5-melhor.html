@@ -200,6 +200,8 @@
             border-radius: 5px;
             padding-left: 5px;
             padding-right: 5px;
+            user-select: none; /* Impede a seleção de texto */
+            cursor: pointer; /* Muda o cursor ao passar por cima */
         }
 
         #hidden {
@@ -283,7 +285,7 @@
 
         const respostaCorreta = "Lembra? Aquele instante, entre a correria da manhã e a expectativa pela aula, se transformou em um universo só nosso.";
         const tempoBloqueio = 1 * 60 * 1000; //1 minuto em milissegundos
-        var tentativas = 0;
+        var tentativas = 0; // Contador de tentativas
         let ipUsuario;
 
         async function obterIP() {
@@ -326,8 +328,9 @@
                 document.getElementById("mensagem").innerText = "Resposta errada! Você não poderá responder por 1 minuto.";
                 bloquearUsuario();
                 setTimeout(function(){
-                        window.location.href = "#timer";
-                    }, 10);
+                    window.location.href = "#timer";
+                }, 10);
+                // Contador de tentativas para ajudar o usuário dps de 3 tentativas. (variável tentativas na linha 286)
                 tentativas = tentativas + 1;
                 if (tentativas >= 3) {
                     alert("Vi que está tendo dificuldades. Há algo escondido na página que será de grande ajuda.");
@@ -412,8 +415,6 @@
                 });
             });
         });
-
-
 
         document.addEventListener("DOMContentLoaded", function () {
             const obs = document.getElementById("obs");

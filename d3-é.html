@@ -23,9 +23,9 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Open Sans', sans-serif;
-            scroll-behavior: smooth;
             scrollbar-width: thin;
-            scrollbar-color: rgba(54, 54, 54, 0.5) transparent;
+            scrollbar-color: #ff006a transparent;
+            scroll-behavior: smooth;
         }
 
         ::-webkit-scrollbar-track {
@@ -33,12 +33,12 @@
         }
 
         ::-webkit-scrollbar-thumb {
-            background: rgba(54, 54, 54, 0.5);
+            background: #888888;
             border-radius: 10px;
         }
 
-        ::-ms-scrollbar {
-            display: none; /* Esconde completamente */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555555;
         }
 
         body { 
@@ -283,8 +283,8 @@
                 document.getElementById("mensagem").innerText = "Resposta errada! Você não poderá responder por 1 minuto.";
                 bloquearUsuario();
                 setTimeout(function(){
-                        window.location.href = "#timer";
-                    }, 10);
+                    window.location.href = "#timer";
+                }, 10);
             }
         }
 

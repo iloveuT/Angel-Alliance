@@ -3,17 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Desafio Nº10</title>
+    <title>Desafio Nº09</title>
     <link rel="shortcut icon" href="img/heart_icon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Mea+Culpa&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Micro+5+Charted&family=Pixelify+Sans:wght@400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-    <script>
-        emailjs.init("G8yQrJsHnxmhrEoGu"); // Substitua pelo seu User ID do EmailJS
-    </script>
-
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playwrite+US+Trad:wght@100..400&display=swap');
@@ -23,9 +18,9 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Open Sans', sans-serif;
-            scroll-behavior: smooth;
             scrollbar-width: thin;
-            scrollbar-color: rgba(54, 54, 54, 0.5) transparent;
+            scrollbar-color: #ff006a transparent;
+            scroll-behavior: smooth;
         }
 
         ::-webkit-scrollbar-track {
@@ -33,16 +28,15 @@
         }
 
         ::-webkit-scrollbar-thumb {
-            background: rgba(54, 54, 54, 0.5);
+            background: #888888;
             border-radius: 10px;
         }
 
-        ::-ms-scrollbar {
-            display: none; /* Esconde completamente */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555555;
         }
 
         body { 
-            -ms-overflow-style: none;
             font-family: Arial, sans-serif;
             text-align: center;
             padding: 20px;
@@ -79,21 +73,31 @@
         }
 
         h2 {
-            color: rgb(87, 0, 250);
+            margin-top: 25px;
+            color: rgb(171, 0, 250);
             font-size: 2em;
-            font-family: "Great Vibes", cursive;
+            font-family: "Dancing Script", cursive;
             font-weight: 300;
         }
 
         #main {
             margin-top: 25px;
             text-align: center;
-            font-size: 1.5em;
+            font-size: 1.45em;
             line-height: 2.5;
-            font-family: "Great Vibes", cursive;
+            font-family: 'Open Sans', sans-serif;
             font-weight: 300;
         }
         
+        p {
+            margin-top: 25px;
+            text-align: center;
+            font-size: 1.5em;
+            line-height: 2.5;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 300;
+        }
+
         #obs {
             display: block;
             text-align: center;
@@ -106,7 +110,7 @@
             overflow: hidden;
             transition: opacity 0.85s ease-in-out, max-height 0.8s ease-in-out;
         }
-
+        
         textarea {
             border-radius: 10px;
             margin-top: 25px;
@@ -116,7 +120,6 @@
             max-width: 500px;
             min-height: 50px;
             max-height: 200px;
-            place-content: center;
             text-align: center;
             resize: none; /* Impede redimensionamento manual */
             overflow-y: hidden; /* Esconde a barra de rolagem vertical */
@@ -133,13 +136,13 @@
             cursor: pointer;
             border-radius: 20px;
             box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease-in-out; 
+            transition: all 0.3s ease-in-out;
             position: relative;
             overflow: hidden;
         }
 
         button:hover {
-            background: linear-gradient(90deg, #ff007f, #ff4a6e);
+            background: linear-gradient(90deg, #ff006f, #ff005f);
             transform: scale(1.1);
         }
 
@@ -152,13 +155,17 @@
             text-align: center;
         }
         
+        textarea {
+            place-content: center;
+        }
+
         #timer { 
             color: red; 
             font-size: 1.2em; 
             display: none; 
             margin-top: 20px;
         }
-
+        
         #mostrarObs {
             position: fixed;
             bottom: 20px;
@@ -179,20 +186,66 @@
             background: linear-gradient(90deg, #ff007f, #ff4a6e);
             transform: scale(1.1);
         }
+
+        video {
+            width: 100%;
+            max-width: 350px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        b {
+            color: rgb(255, 0, 234);
+            background-color: rgba(233, 233, 233, 0.3);
+            border-radius: 5px;
+            padding-left: 5px;
+            padding-right: 5px;
+            user-select: none; /* Impede a seleção de texto */
+            cursor: pointer; /* Muda o cursor ao passar por cima */
+        }
+
+        #hidden {
+            position: absolute;
+            bottom: 5px;
+            right: 25px;
+            background: rgba(255, 117, 140, 0.3); /* Cor semelhante ao fundo */
+            color: rgba(0, 0, 0, 0.2); /* Quase invisível */
+            border-radius: 5px;
+            padding: 5px 10px 10px 100px;
+            font-size: 0.2em;
+            opacity: 0.2; /* Mantém discreto */
+            transition: opacity 0.3s ease-in-out, font-size 0.3s ease-in-out, color 0.3s ease-in-out;
+        }
+
+        #hidden:hover {
+            opacity: 1; /* Fica visível ao passar o mouse */
+            font-size: 0.9em;
+            color: black;
+        }
+
+        a {
+            text-decoration: none;
+        }
         
     </style>
 </head>
 <body>
-    <h1>Decifre a frase a seguir:</h1>
-
-    <h2>Lembrar de uma data é fácil! Agora vamos complicar as coisas.</h2>
+    <div id="hidden">
+        <a href="source/no-seu-pescoco-chimamanda-ngozi-adichie.pdf" target="about:blank">A edição certa</a> de "No Seu Pescoço".
+    </div>
+    <h1>Você está bem encrencada agora</h1>
+    <video src="img/d9.mp4" autoplay controls draggable="false" preload="auto" loop></video>
     
+    <h2>Ohhh minha Love Quinn, como lhe amo tanto minha lindeza!!</h2>
+
     <p id="main">
         
     </p>
-    
-    <p id="obs">  <!--Dica-->
-        
+
+    <p id="obs">
+        <b>No seu pescoço - Chimamanda Ngozi Adichie</b> <br>
+        Pág. 69 <br>
+        (Clique no texto em rosa para copiar)
     </p>
     
     <textarea id="resposta" placeholder="Digite sua resposta aqui" autocomplete="off"></textarea>
@@ -200,8 +253,8 @@
     <p id="mensagem"></p>
     <p id="timer"></p>
     <div id="end"></div>
-    
-    <button id="mostrarObs">Obs</button>
+
+    <button id="mostrarObs">Dica</button>
     
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -214,6 +267,7 @@
                     document.body.style.opacity = opacidade.toFixed(1); // Ajusta com 1 casa decimal
                 } else {
                     clearInterval(fadeIn); // Para o loop quando atingir 1
+                    document.getElementById("mensagem").style.display = "block";
                 }
             }, 30); // Atualiza a cada 50ms
         });
@@ -230,8 +284,9 @@
             ajustarAltura();
         });        
 
-        const respostaCorreta = "Era dia 23 de maio quando o mundo parou e só existia você. Entre os corredores da escola, a agitação da manhã se apagou, e tudo o que restou foi o calor do seu olhar e a intensidade do seu beijo. Lembra? Aquele instante, entre a correria da manhã e a expectativa pela aula, se transformou em um universo só nosso. Seus lábios macios tocaram os meus, e em uma fração de segundo, o mundo ao redor simplesmente desapareceu. Foi como se o tempo tivesse parado. Aquele beijo carregava a promessa de um novo dia, a esperança de um futuro juntos e a certeza de que nossos sentimentos eram intensos e verdadeiros. A cada segundo que passa, aquele beijo ecoa em meu coração. É como se um raio de sol tivesse iluminado meu dia, aquecendo minha alma e me enchendo de alegria. Agradeço por esse momento mágico, por ter você ao meu lado e por cada beijo que ainda vamos trocar. Eu a amo, minha princesa.";
+        const respostaCorreta = "A cada segundo que passa, aquele beijo ecoa em meu coração. É como se um raio de sol tivesse iluminado meu dia, aquecendo minha alma e me enchendo de alegria9";
         const tempoBloqueio = 1 * 60 * 1000; //1 minuto em milissegundos
+        var tentativas = 0; // Contador de tentativas
         let ipUsuario;
 
         async function obterIP() {
@@ -247,7 +302,7 @@
 
         async function verificarBloqueio() {
             ipUsuario = await obterIP(); // Obtem o IP do usuário
-            const bloqueio = JSON.parse(localStorage.getItem('bloqueiof10')) || {};
+            const bloqueio = JSON.parse(localStorage.getItem('bloqueiof09')) || {};
             if (bloqueio[ipUsuario] && Date.now() < bloqueio[ipUsuario]) {
                 iniciarContador(bloqueio[ipUsuario]); // Inicia o contador de bloqueio
                 return true;
@@ -263,12 +318,10 @@
                 document.getElementById("mensagem").style.display = "block";
                 document.getElementById("mensagem").innerText = "Resposta correta! Você será encaminhada para a próxima fase!";
                 window.location.href = "#end";
-                enviarEmail();  // Envia o e-mail pra mim
-
                 setTimeout(function(){
                     document.body.style.opacity = "0";
                     setTimeout(function(){
-                        window.location.href = "end-vida.html";
+                        window.location.href = "d6-coisa.html";
                     }, 500);
                 }, 3500);
             } else {
@@ -278,25 +331,21 @@
                 setTimeout(function(){
                     window.location.href = "#timer";
                 }, 10);
+                // Contador de tentativas para ajudar o usuário dps de 3 tentativas. (variável tentativas na linha 286)
+                tentativas = tentativas + 1;
+                if (tentativas >= 3) {
+                    alert("Vi que está tendo dificuldades. Conte os espaços, formato: (LINHA,CARACTERE). Tente novamente.");
+                    alert("Há algo escondido que lhe ajudará novamente. A paciência é uma virtude. Boa sorte!");
+                }
             }
         }
 
         function bloquearUsuario() {
             const desbloqueio = Date.now() + tempoBloqueio;
-            let bloqueio = JSON.parse(localStorage.getItem('bloqueiof10')) || {};
+            let bloqueio = JSON.parse(localStorage.getItem('bloqueiof09')) || {};
             bloqueio[ipUsuario] = desbloqueio;
-            localStorage.setItem('bloqueiof10', JSON.stringify(bloqueio));
+            localStorage.setItem('bloqueiof09', JSON.stringify(bloqueio));
             iniciarContador(desbloqueio);
-        }
-        
-        // Função para enviar o e-mail
-        function enviarEmail() {
-            emailjs.send("personal_gmail", "template_conc_fase_10") //alterar service e template pra cada necessidade
-                .then(function(response) {
-                    console.log("E-mail enviado com sucesso!", response.status, response.text);
-                }, function(error) {
-                    console.error("Erro ao enviar o e-mail:", error);
-                });
         }
 
         function iniciarContador(desbloqueio) {
@@ -310,9 +359,9 @@
                     document.getElementById("resposta").disabled = false;
                     document.getElementById("timer").style.display = "none";
                     document.getElementById("mensagem").style.display = "none";
-                    let bloqueio = JSON.parse(localStorage.getItem('bloqueiof10')) || {};
+                    let bloqueio = JSON.parse(localStorage.getItem('bloqueiof09')) || {};
                     delete bloqueio[ipUsuario];
-                    localStorage.setItem('bloqueiof10', JSON.stringify(bloqueio));
+                    localStorage.setItem('bloqueiof09', JSON.stringify(bloqueio));
                 } else {
                     const minutos = Math.floor(tempoRestante / 60000);
                     const segundos = Math.floor((tempoRestante % 60000) / 1000);
@@ -324,6 +373,50 @@
         }
 
         window.onload = verificarBloqueio;
+
+        // Copia o texto do <b> para a área de transferência
+        document.addEventListener("DOMContentLoaded", function () {
+            const boldElement = document.querySelector("b");
+
+            boldElement.addEventListener("click", function () {
+                const texto = this.innerText;
+
+                // Copia o texto para a área de transferência
+                navigator.clipboard.writeText(texto).then(() => {
+                    // Cria o tooltip (caixa de diálogo)
+                    const tooltip = document.createElement("div");
+                    tooltip.innerText = "Copiado!";
+                    tooltip.style.position = "absolute";
+                    tooltip.style.background = "#ff007f";
+                    tooltip.style.color = "#fff";
+                    tooltip.style.padding = "5px 10px";
+                    tooltip.style.borderRadius = "5px";
+                    tooltip.style.fontSize = "0.9em";
+                    tooltip.style.boxShadow = "0px 4px 10px rgba(0, 0, 0, 0.2)";
+                    tooltip.style.transition = "opacity 0.3s ease-in-out";
+                    tooltip.style.opacity = "0";
+                    tooltip.style.pointerEvents = "none";
+                    tooltip.style.whiteSpace = "nowrap"; // Evita quebra de linha
+
+                    // Posiciona o tooltip acima do <b>
+                    const rect = boldElement.getBoundingClientRect();
+                    const tooltipWidth = 80; // Largura aproximada do tooltip
+                    tooltip.style.left = `${rect.left + window.scrollX + (rect.width / 2) - (tooltipWidth / 2)}px`;
+                    tooltip.style.top = `${rect.top + window.scrollY - 30}px`;
+
+                    document.body.appendChild(tooltip);
+                    requestAnimationFrame(() => (tooltip.style.opacity = "1"));
+
+                    // Remove o tooltip após 1.5 segundos
+                    setTimeout(() => {
+                        tooltip.style.opacity = "0";
+                        setTimeout(() => tooltip.remove(), 300);
+                    }, 1500);
+                }).catch(err => {
+                    console.error("Erro ao copiar texto: ", err);
+                });
+            });
+        });
 
         document.addEventListener("DOMContentLoaded", function () {
             const obs = document.getElementById("obs");
