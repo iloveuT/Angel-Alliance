@@ -145,7 +145,7 @@
                 heartCoordinates.forEach(coord => {
                     const particle = document.createElement("div");
                     particle.classList.add("particle");
-                    particle.style.left = explosion.style.left;
+                    particle.style.left = `calc(${explosion.style.left} + 7px)`; // Ajuste fino para centralizar
                     particle.style.bottom = explosion.style.bottom;
                     particle.style.color = explosion.style.color;
                     particle.style.setProperty('--x', coord.x + 'px');
