@@ -23,7 +23,7 @@ Desafio De Aniversário
 
         Desafio 08: OK
 
-        Desafio 09: oK
+        Desafio 09: OK
 
         Desafio 10: OK
 
