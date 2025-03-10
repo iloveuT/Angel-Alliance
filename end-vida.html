@@ -41,8 +41,37 @@
 
         .balloon {
             position: absolute;
-            font-size: 4em;
+            font-size: 3em;
             animation: rise 6s linear;
+        }
+
+        .firework {
+            position: absolute;
+            width: 5px;
+            height: 20px;
+            background: linear-gradient(to top, yellow, red);
+            animation: shoot 2s ease-out;
+            box-shadow: 0 0 10px rgba(255, 255, 0, 0.8);
+        }
+
+        .explosion {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, red, yellow, transparent);
+            border-radius: 50%;
+            animation: explode 1s ease-out;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+        }
+
+        .particle {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: currentColor;
+            border-radius: 50%;
+            animation: particleMove 1.5s ease-out;
+            box-shadow: 0 0 5px currentColor;
         }
 
         @keyframes rise {
@@ -52,18 +81,22 @@
             100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
         }
 
-        .heart {
-            position: absolute;
-            color: rgba(255, 0, 100, 0.7);
-            font-size: 1.5em;
-            animation: fall 4s linear infinite;
+        @keyframes shoot {
+            0% { transform: translateY(100vh); opacity: 1; }
+            80% { opacity: 1; }
+            100% { transform: translateY(var(--targetHeight)); opacity: 0; }
         }
 
-        @keyframes fall {
-            0% { transform: translateY(-100vh) scale(1); opacity: 1; }
-            50% { opacity: 0.8; }
-            100% { transform: translateY(100vh) scale(0.8); opacity: 0; }
+        @keyframes explode {
+            0% { transform: scale(0); opacity: 1; }
+            100% { transform: scale(5); opacity: 0; }
         }
+
+        @keyframes particleMove {
+            0% { transform: translate(0, 0); opacity: 1; }
+            100% { transform: translate(var(--x), var(--y)); opacity: 0; }
+        }
+
     </style>
 </head>
 <body>
@@ -73,6 +106,7 @@
 
     <script>
         let intervaloBalões = setInterval(criarBalao, 300);
+        criarFogo();
 
         function criarBalao() {
             for (let i = 0; i < 10; i++) {
@@ -88,25 +122,63 @@
             }
         }
 
+        function criarFogo() {
+            const firework = document.createElement("div");
+            firework.classList.add("firework");
+            document.body.appendChild(firework);
+            firework.style.left = Math.random() * 100 + "vw";
+            firework.style.bottom = "0";
+            const targetHeight = Math.random() * 50 + 50 + "vh";
+            firework.style.setProperty('--targetHeight', `-${targetHeight}`);
+            firework.style.animationDuration = Math.random() * 1 + 1 + "s";
+
+            firework.addEventListener('animationend', () => {
+                const explosion = document.createElement("div");
+                explosion.classList.add("explosion");
+                explosion.style.left = firework.style.left;
+                explosion.style.bottom = targetHeight;
+                explosion.style.color = getRandomColor();
+                document.body.appendChild(explosion);
+
+                const heartCoordinates = generateHeartCoordinates(20, 20);
+
+                heartCoordinates.forEach(coord => {
+                    const particle = document.createElement("div");
+                    particle.classList.add("particle");
+                    particle.style.left = explosion.style.left;
+                    particle.style.bottom = explosion.style.bottom;
+                    particle.style.color = explosion.style.color;
+                    particle.style.setProperty('--x', coord.x + 'px');
+                    particle.style.setProperty('--y', coord.y + 'px');
+                    document.body.appendChild(particle);
+                    setTimeout(() => particle.remove(), 1500);
+                });
+
+                setTimeout(() => explosion.remove(), 1000);
+                firework.remove();
+                criarFogo(); // Chama a função novamente para criar fogos continuamente
+            });
+        }
+
+        function generateHeartCoordinates(width, height) {
+            const coords = [];
+            for (let angle = 0; angle < 360; angle += 10) {
+                const rad = angle * (Math.PI / 180);
+                const x = width * 16 * Math.sin(rad) ** 3;
+                const y = -height * (13 * Math.cos(rad) - 5 * Math.cos(2 * rad) - 2 * Math.cos(3 * rad) - Math.cos(4 * rad));
+                coords.push({ x, y });
+            }
+            return coords;
+        }
+
+        function getRandomColor() {
+            const colors = ["red", "yellow", "blue", "green", "purple", "lightgreen", "cyan"];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
         setTimeout(() => {
             clearInterval(intervaloBalões);
-            setTimeout(() => {
-                setInterval(criarCoracao, 80);
-            }, 5000);
         }, 3000); // Para a criação de balões após 3 segundos
-
-        function criarCoracao() {
-            for (let i = 0; i < 3; i++) {
-                const heart = document.createElement("div");
-                heart.innerHTML = "❤️";
-                heart.classList.add("heart");
-                document.body.appendChild(heart);
-                heart.style.left = Math.random() * 100 + "vw";
-                heart.style.top = "-12vh";
-                heart.style.animationDuration = Math.random() * 3 + 2 + "s";
-                setTimeout(() => heart.remove(), 5000);
-            }
-        }
     </script>
 </body>
 </html>
