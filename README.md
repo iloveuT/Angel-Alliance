@@ -27,7 +27,7 @@ Desafio De Aniversário
 
         Desafio 10: OK
 
-        Finalização: Finalizando
+        Finalização: OK
 
 
 
