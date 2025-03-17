@@ -2,7 +2,7 @@ Desafio De Aniversário
     Entrega: 01/04/2025
 
 
-    Status Geral: Finalização Geral 
+    Status Geral: Finalizado / Entregue
 
 
         Página inicial: OK
