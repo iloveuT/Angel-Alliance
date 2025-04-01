@@ -228,6 +228,19 @@
             text-decoration: none;
         }
         
+        #countdown {
+            position: sticky;
+            bottom: 10px;
+            right: 99%;
+            font-size: 1.2em;
+            color: #fff;
+            background: rgba(255, 0, 179, 0.5);
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-family: Arial, sans-serif;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+            z-index: 1000; /* Garante que fique acima de outros elementos */
+        }
     </style>
 </head>
 <body>
@@ -264,6 +277,7 @@
     <p id="mensagem"></p>
     <p id="timer"></p>
     <div id="end"></div>
+    <div id="countdown"></div>
 
     <button id="mostrarObs">Dica</button>
     
@@ -443,6 +457,29 @@
                 }
             });
         });
+
+        function atualizarContagemRegressiva() {
+            const destino = new Date("2025-05-01T23:59:00");
+            const agora = new Date();
+            const diferenca = destino - agora;
+
+            if (diferenca <= 0) {
+                document.getElementById("countdown").innerText = "Chegou o grande momento!";
+                clearInterval(intervaloContagem);
+                return;
+            }
+
+            const dias = Math.floor(diferenca / (1000 * 60 * 60 * 24));
+            const horas = Math.floor((diferenca % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutos = Math.floor((diferenca % (1000 * 60 * 60)) / (1000 * 60));
+            const segundos = Math.floor((diferenca % (1000 * 60)) / 1000);
+
+            document.getElementById("countdown").innerText = 
+                `${dias}d ${horas}h ${minutos}m ${segundos}s`;
+        }
+
+        const intervaloContagem = setInterval(atualizarContagemRegressiva, 1000);
+        atualizarContagemRegressiva();
         
     </script>
 </body>

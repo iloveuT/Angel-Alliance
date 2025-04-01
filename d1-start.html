@@ -216,6 +216,19 @@
             margin-top: 20px;
         }
         
+        #countdown {
+            position: sticky;
+            bottom: 10px;
+            right: 99%;
+            font-size: 1.2em;
+            color: #fff;
+            background: rgba(255, 0, 179, 0.5);
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-family: Arial, sans-serif;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+            z-index: 1000; /* Garante que fique acima de outros elementos */
+        }
     </style>
 </head>
 <body>
@@ -282,7 +295,9 @@
     <p id="mensagem"></p>
     <p id="timer"></p>
     <div id="end"></div>
-
+    
+    <div id="countdown"></div>
+    
     <script>
         document.addEventListener("DOMContentLoaded", function() {  //config mais fluida até agr
             document.body.style.opacity = "0"; // Garante que começa invisível
@@ -392,6 +407,78 @@
         }
 
         window.onload = verificarBloqueio;
+
+        function bloquearUsuario() {
+            const desbloqueio = Date.now() + tempoBloqueio;
+            let bloqueio = JSON.parse(localStorage.getItem('bloqueiof04')) || {};
+            bloqueio[ipUsuario] = desbloqueio;
+            localStorage.setItem('bloqueiof04', JSON.stringify(bloqueio));
+            iniciarContador(desbloqueio);
+        }
+
+        function iniciarContador(desbloqueio) {
+            document.getElementById("resposta").disabled = true;
+            document.getElementById("timer").style.display = "block";
+            
+            function atualizarContador() {
+                const tempoRestante = desbloqueio - Date.now();
+                if (tempoRestante <= 0) {
+                    document.getElementById("timer").innerText = "Você pode tentar novamente.";
+                    document.getElementById("resposta").disabled = false;
+                    document.getElementById("timer").style.display = "none";
+                    document.getElementById("mensagem").style.display = "none";
+                    let bloqueio = JSON.parse(localStorage.getItem('bloqueiof04')) || {};
+                    delete bloqueio[ipUsuario];
+                    localStorage.setItem('bloqueiof04', JSON.stringify(bloqueio));
+                } else {
+                    const minutos = Math.floor(tempoRestante / 60000);
+                    const segundos = Math.floor((tempoRestante % 60000) / 1000);
+                    document.getElementById("timer").innerText = `Tente novamente em ${minutos}m ${segundos}s`;
+                    setTimeout(atualizarContador, 1000);
+                }
+            }
+            atualizarContador();
+        }
+
+        window.onload = verificarBloqueio;
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const obs = document.getElementById("obs");
+            const botao = document.getElementById("mostrarObs");
+        
+            botao.addEventListener("click", function () {
+                if (obs.style.opacity === "0" || obs.style.opacity === "") {
+                    obs.style.maxHeight = "500px"; // Ajuste conforme necessário
+                    obs.style.opacity = "1";
+                } else {
+                    obs.style.maxHeight = "0";
+                    obs.style.opacity = "0";
+                }
+            });
+        });
+
+        function atualizarContagemRegressiva() {
+            const destino = new Date("2025-05-01T23:59:00");
+            const agora = new Date();
+            const diferenca = destino - agora;
+
+            if (diferenca <= 0) {
+                document.getElementById("countdown").innerText = "Chegou o grande momento!";
+                clearInterval(intervaloContagem);
+                return;
+            }
+
+            const dias = Math.floor(diferenca / (1000 * 60 * 60 * 24));
+            const horas = Math.floor((diferenca % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutos = Math.floor((diferenca % (1000 * 60 * 60)) / (1000 * 60));
+            const segundos = Math.floor((diferenca % (1000 * 60)) / 1000);
+
+            document.getElementById("countdown").innerText = 
+                `${dias}d ${horas}h ${minutos}m ${segundos}s`;
+        }
+
+        const intervaloContagem = setInterval(atualizarContagemRegressiva, 1000);
+        atualizarContagemRegressiva();
     </script>
 </body>
 </html>
