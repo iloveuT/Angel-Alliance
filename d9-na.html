@@ -268,8 +268,7 @@
 
     <p id="obs">
         <b>No seu pescoço - Chimamanda Ngozi Adichie</b> <br>
-        Pág. 69 <br>
-        (Clique no texto em rosa para copiar)
+        Pág. 69
     </p>
     
     <textarea id="resposta" placeholder="Digite sua resposta aqui" autocomplete="off"></textarea>
@@ -277,10 +276,14 @@
     <p id="mensagem"></p>
     <p id="timer"></p>
     <div id="end"></div>
-    <div id="countdown"></div>
 
     <button id="mostrarObs">Dica</button>
     
+    <div id="tempo-restante" style="position: fixed; bottom: 50px; left: 10px; font-size: 1.2em; color: #fff; background: rgba(255, 0, 179, 0); padding: 10px 15px; border-radius: 5px; font-family: Arial, sans-serif; text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5); z-index: 1000;">
+        Tempo Restante:
+    </div>
+    <div id="countdown"></div>
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             document.body.style.opacity = "0"; // Garante que começa invisível
@@ -309,7 +312,7 @@
             ajustarAltura();
         });        
 
-        const respostaCorreta = "A cada segundo que passa, aquele beijo ecoa em meu coração. É como se um raio de sol tivesse iluminado meu dia, aquecendo minha alma e me enchendo de alegria9";
+        const respostaCorreta = "A cada segundo que passa, aquele beijo ecoa em meu coração. É como se um raio de sol tivesse iluminado meu dia, aquecendo minha alma e me enchendo de alegria.";
         const tempoBloqueio = 1 * 60 * 1000; //1 minuto em milissegundos
         var tentativas = 0; // Contador de tentativas
         let ipUsuario;
