@@ -60,13 +60,17 @@
 
         .container {
             position: relative;
-            max-width: 800px;
+            max-width: 90%; /* Ajuste para ocupar mais espaço horizontal */
             margin: 0 auto;
             padding: 50px;
             background-color: rgba(255, 255, 255, 0.4);
             border-radius: 10px;
             box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
-            transition: transform 0.3s ease-in-out;
+            display: flex;
+            flex-direction: row; /* Coloca os itens em linha */
+            justify-content: space-around; /* Espaço uniforme entre as áreas */
+            align-items: flex-start; /* Alinha os itens ao topo */
+            gap: 30px; /* Espaçamento maior entre as duas áreas */
         }
 
         h1 {
@@ -194,6 +198,67 @@
             text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
             z-index: 1000; /* Garante que fique acima de outros elementos */
         }
+
+        .frase-bloco {
+            background-color: rgba(255, 255, 255, 0.7);
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            cursor: grab;
+            font-size: 1.1em;
+            text-align: center;
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+            width: 100%; /* Largura total do contêiner pai */
+            max-width: none; /* Remove limite de largura */
+            margin-bottom: 15px; /* Espaço entre os blocos */
+            padding: 15px 20px; /* Adiciona mais espaço interno */
+            line-height: 1.5;
+        }
+
+        #frases-embaralhadas {
+            display: flex;
+            flex-direction: column;
+            gap: 15px; /* Espaçamento maior entre os blocos */
+            width: 48%; /* Ajuste para ocupar mais espaço */
+            max-width: 500px; /* Largura máxima maior */
+            align-items: stretch; /* Estica os blocos para preencher a largura */
+        }
+
+        #area-resposta {
+            display: flex;
+            flex-direction: column;
+            gap: 15px; /* Espaçamento maior entre os blocos */
+            width: 48%; /* Ajuste para ocupar mais espaço */
+            max-width: 500px; /* Largura máxima maior */
+            margin-top: 0; /* Garante que não tenha margem superior extra */
+            padding: 15px;
+            border: 2px dashed #aaa;
+            border-radius: 10px;
+        }
+
+        #verificar-ordem {
+            margin-top: 0; /* Remove margem superior */
+            padding: 15px 30px;
+            font-size: 1.3em;
+            font-weight: bold;
+            background: linear-gradient(90deg, #ff4a6e, #ff007f);
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 20px;
+            box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease-in-out;
+            position: sticky; /* Fixa o botão no topo do container */
+            top: 0; /* Sempre visível no topo */
+            z-index: 10; /* Garante que fique acima de outros elementos */
+            width: auto; /* Ajusta a largura para o conteúdo */
+            align-self: center; /* Centraliza o botão no container */
+            display: block; /* Garante que o botão seja sempre exibido */
+        }
+
+        #verificar-ordem:hover {
+            background: linear-gradient(90deg, #ff007f, #ff4a6e);
+            transform: scale(1.1);
+        }
     </style>
 </head>
 <body>
@@ -202,7 +267,7 @@
     <h2>Será que você vai gostar? <br> Ou será que você vai amar?</h2>
     
     <p id="main">
-        Ordem: 2 6 5 4 3 9 7 8
+        Arraste os blocos de texto para a área abaixo na ordem correta: 2 6 5 4 3 9 7 8
     </p>
     
     <p id="obs">  <!--Dica-->
@@ -217,9 +282,11 @@
         Não se esqueça do espaço entre as frases de cada desafio e da pontuação. <br>
         Boa sorte!
     </p>
-    
-    <textarea id="resposta" placeholder="Digite sua resposta aqui" autocomplete="off"></textarea>
-    <button onclick="verificarResposta()">Verificar Resposta</button>
+    <div class="container">
+        <div id="frases-embaralhadas"></div>
+        <button id="verificar-ordem">Verificar Ordem</button>
+        <div id="area-resposta"></div>
+    </div>
     <p id="mensagem"></p>
     <p id="timer"></p>
     <div id="end"></div>
@@ -258,7 +325,19 @@
             ajustarAltura();
         });        
 
-        const respostaCorreta = "Era dia 23 de maio quando o mundo parou e só existia você. Entre os corredores da escola, a agitação da manhã se apagou, e tudo o que restou foi o calor do seu olhar e a intensidade do seu beijo. Lembra? Aquele instante, entre a correria da manhã e a expectativa pela aula, se transformou em um universo só nosso. Seus lábios macios tocaram os meus, e em uma fração de segundo, o mundo ao redor simplesmente desapareceu. Foi como se o tempo tivesse parado. Aquele beijo carregava a promessa de um novo dia, a esperança de um futuro juntos e a certeza de que nossos sentimentos eram intensos e verdadeiros. A cada segundo que passa, aquele beijo ecoa em meu coração. É como se um raio de sol tivesse iluminado meu dia, aquecendo minha alma e me enchendo de alegria. Agradeço por esse momento mágico, por ter você ao meu lado e por cada beijo que ainda vamos trocar. Eu a amo, minha princesa.";
+        const frasesCorretas = [
+            "Era dia 23 de maio quando o mundo parou e só existia você.",
+            "Entre os corredores da escola, a agitação da manhã se apagou, e tudo o que restou foi o calor do seu olhar e a intensidade do seu beijo.",
+            "Lembra? Aquele instante, entre a correria da manhã e a expectativa pela aula, se transformou em um universo só nosso.",
+            "Seus lábios macios tocaram os meus, e em uma fração de segundo, o mundo ao redor simplesmente desapareceu.",
+            "Foi como se o tempo tivesse parado.",
+            "Aquele beijo carregava a promessa de um novo dia, a esperança de um futuro juntos e a certeza de que nossos sentimentos eram intensos e verdadeiros.",
+            "A cada segundo que passa, aquele beijo ecoa em meu coração. É como se um raio de sol tivesse iluminado meu dia, aquecendo minha alma e me enchendo de alegria.",
+            "Agradeço por esse momento mágico, por ter você ao meu lado e por cada beijo que ainda vamos trocar. Eu a amo, minha princesa."
+        ];
+
+        let frasesEmbaralhadas = [];
+        let elementoArrastado = null;
         const tempoBloqueio = 1 * 60 * 1000; //1 minuto em milissegundos
         let ipUsuario;
 
@@ -283,15 +362,105 @@
             return false;
         }
 
-        async function verificarResposta() {
+        function embaralharFrases() {
+            const frases = [...frasesCorretas];
+            for (let i = frases.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [frases[i], frases[j]] = [frases[j], frases[i]];
+            }
+            frasesEmbaralhadas = frases.map((frase, index) => ({ id: index + 1, texto: frase }));
+        }
+
+        function criarBlocosFrases() {
+            const containerEmbaralhadas = document.getElementById("frases-embaralhadas");
+            frasesEmbaralhadas.forEach(fraseObj => {
+                const bloco = document.createElement("div");
+                bloco.classList.add("frase-bloco");
+                bloco.id = `frase-${fraseObj.id}`;
+                bloco.draggable = true;
+                bloco.innerText = fraseObj.texto;
+
+                bloco.addEventListener("dragstart", iniciarArrasto);
+                bloco.addEventListener("dragend", finalizarArrasto);
+
+                containerEmbaralhadas.appendChild(bloco);
+            });
+        }
+
+        function iniciarArrasto(event) {
+            elementoArrastado = event.target;
+            event.dataTransfer.setData("text/plain", event.target.id);
+            event.target.style.opacity = "0.5"; // Reduz a opacidade para feedback visual
+        }
+
+        function finalizarArrasto(event) {
+            event.target.style.opacity = "1"; // Restaura a opacidade
+        }
+
+        function permitirDrop(event) {
+            event.preventDefault();
+            const areaResposta = document.getElementById("area-resposta");
+            areaResposta.style.borderColor = "#ff007f"; // Destaca a área de drop
+        }
+
+        function removerDrop(event) {
+            event.preventDefault();
+            const areaResposta = document.getElementById("area-resposta");
+            areaResposta.style.borderColor = "#aaa"; // Restaura a borda padrão
+        }
+
+        function receberDrop(event) {
+            event.preventDefault();
+            const id = event.dataTransfer.getData("text/plain");
+            const elemento = document.getElementById(id);
+            const areaResposta = document.getElementById("area-resposta");
+
+            if (event.target === areaResposta || event.target.parentElement === areaResposta) {
+                areaResposta.appendChild(elemento);
+            } else {
+                const containerEmbaralhadas = document.getElementById("frases-embaralhadas");
+                containerEmbaralhadas.appendChild(elemento);
+            }
+
+            elementoArrastado = null;
+            areaResposta.style.borderColor = "#aaa"; // Restaura a borda padrão
+        }
+
+        function habilitarReordenacao() {
+            const areaResposta = document.getElementById("area-resposta");
+            areaResposta.addEventListener("dragover", permitirDrop);
+            areaResposta.addEventListener("drop", receberDrop);
+            areaResposta.addEventListener("dragleave", removerDrop);
+
+            const containerEmbaralhadas = document.getElementById("frases-embaralhadas");
+            containerEmbaralhadas.addEventListener("dragover", permitirDrop);
+            containerEmbaralhadas.addEventListener("drop", receberDrop);
+            containerEmbaralhadas.addEventListener("dragleave", removerDrop);
+        }
+
+        async function verificarOrdem() {
             if (await verificarBloqueio()) return;
 
-            const resposta = document.getElementById("resposta").value.trim();
-            if (resposta.toLowerCase() === respostaCorreta.toLowerCase()) {
+            const areaResposta = document.getElementById("area-resposta");
+            const frasesSelecionadas = Array.from(areaResposta.children).map(bloco => bloco.innerText);
+
+            if (frasesSelecionadas.length !== frasesCorretas.length) {
+                document.getElementById("mensagem").style.display = "block";
+                document.getElementById("mensagem").innerText = "Ordene todas as frases!";
+                setTimeout(() => {
+                    document.getElementById("mensagem").style.display = "none";
+                }, 2000);
+                return;
+            }
+
+            const respostaUsuario = frasesSelecionadas.join(" ");
+            const respostaCorretaCompleta = frasesCorretas.join(" ");
+
+            if (respostaUsuario.toLowerCase() === respostaCorretaCompleta.toLowerCase()) {
                 document.getElementById("mensagem").style.display = "block";
                 document.getElementById("mensagem").innerText = "Resposta correta! Você será encaminhada para a próxima fase!";
                 window.location.href = "#end";
-                enviarEmail();  // Envia o e-mail pra mim
+                enviarEmail();
 
                 setTimeout(function(){
                     document.body.style.opacity = "0";
@@ -301,7 +470,7 @@
                 }, 3500);
             } else {
                 document.getElementById("mensagem").style.display = "block";
-                document.getElementById("mensagem").innerText = "Resposta errada! Você não poderá responder por 1 minuto.";
+                document.getElementById("mensagem").innerText = "Resposta incorreta! Você não poderá responder por 1 minuto.";
                 bloquearUsuario();
                 setTimeout(function(){
                     window.location.href = "#timer";
@@ -315,6 +484,20 @@
             bloqueio[ipUsuario] = desbloqueio;
             localStorage.setItem('bloqueiof10', JSON.stringify(bloqueio));
             iniciarContador(desbloqueio);
+
+            const areaResposta = document.getElementById("area-resposta");
+            const frasesEmbaralhadasDiv = document.getElementById("frases-embaralhadas");
+            const verificarBotao = document.getElementById("verificar-ordem");
+
+            Array.from(areaResposta.children).forEach(bloco => {
+                bloco.draggable = false;
+                bloco.style.cursor = 'default';
+            });
+            Array.from(frasesEmbaralhadasDiv.children).forEach(bloco => {
+                bloco.draggable = false;
+                bloco.style.cursor = 'default';
+            });
+            verificarBotao.disabled = true;
         }
         
         // Função para enviar o e-mail
@@ -328,15 +511,27 @@
         }
 
         function iniciarContador(desbloqueio) {
-            document.getElementById("resposta").disabled = true;
-            document.getElementById("timer").style.display = "block";
-            
+            const timerElement = document.getElementById("timer");
+            const areaResposta = document.getElementById("area-resposta");
+            const frasesEmbaralhadasDiv = document.getElementById("frases-embaralhadas");
+            const verificarBotao = document.getElementById("verificar-ordem");
+
+            timerElement.style.display = "block";
+
             function atualizarContador() {
                 const tempoRestante = desbloqueio - Date.now();
                 if (tempoRestante <= 0) {
-                    document.getElementById("timer").innerText = "Você pode tentar novamente.";
-                    document.getElementById("resposta").disabled = false;
-                    document.getElementById("timer").style.display = "none";
+                    timerElement.innerText = "Você pode tentar novamente.";
+                    Array.from(areaResposta.children).forEach(bloco => {
+                        bloco.draggable = true;
+                        bloco.style.cursor = 'grab';
+                    });
+                    Array.from(frasesEmbaralhadasDiv.children).forEach(bloco => {
+                        bloco.draggable = true;
+                        bloco.style.cursor = 'grab';
+                    });
+                    verificarBotao.disabled = false;
+                    timerElement.style.display = "none";
                     document.getElementById("mensagem").style.display = "none";
                     let bloqueio = JSON.parse(localStorage.getItem('bloqueiof10')) || {};
                     delete bloqueio[ipUsuario];
@@ -344,14 +539,23 @@
                 } else {
                     const minutos = Math.floor(tempoRestante / 60000);
                     const segundos = Math.floor((tempoRestante % 60000) / 1000);
-                    document.getElementById("timer").innerText = `Tente novamente em ${minutos}m ${segundos}s`;
+                    timerElement.innerText = `Tente novamente em ${minutos}m ${segundos}s`;
                     setTimeout(atualizarContador, 1000);
                 }
             }
             atualizarContador();
         }
 
-        window.onload = verificarBloqueio;
+        window.onload = function() {
+            verificarBloqueio().then(() => {
+                embaralharFrases();
+                criarBlocosFrases();
+                habilitarReordenacao();
+
+                const verificarOrdemButton = document.getElementById("verificar-ordem");
+                verificarOrdemButton.addEventListener("click", verificarOrdem);
+            });
+        };
 
         document.addEventListener("DOMContentLoaded", function () {
             const obs = document.getElementById("obs");
