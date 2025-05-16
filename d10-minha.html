@@ -355,11 +355,14 @@
         async function verificarBloqueio() {
             ipUsuario = await obterIP(); // Obtem o IP do usuário
             const bloqueio = JSON.parse(localStorage.getItem('bloqueiof10')) || {};
-            if (bloqueio[ipUsuario] && Date.now() < bloqueio[ipUsuario]) {
+            const tempoAtual = Date.now();
+
+            if (bloqueio[ipUsuario] && tempoAtual < bloqueio[ipUsuario]) {
                 iniciarContador(bloqueio[ipUsuario]); // Inicia o contador de bloqueio
-                return true;
+                return true; // Indica que o usuário está bloqueado
             }
-            return false;
+
+            return false; // Indica que o usuário não está bloqueado
         }
 
         function embaralharFrases() {
@@ -462,29 +465,30 @@
                 window.location.href = "#end";
                 enviarEmail();
 
-                setTimeout(function(){
+                setTimeout(function() {
                     document.body.style.opacity = "0";
-                    setTimeout(function(){
+                    setTimeout(function() {
                         window.location.href = "end-vida.html";
                     }, 500);
                 }, 3500);
             } else {
+                bloquearUsuario(); // Ativa o bloqueio imediatamente
                 document.getElementById("mensagem").style.display = "block";
                 document.getElementById("mensagem").innerText = "Resposta incorreta! Você não poderá responder por 1 minuto.";
-                bloquearUsuario();
-                setTimeout(function(){
+                setTimeout(function() {
                     window.location.href = "#timer";
                 }, 10);
             }
         }
 
         function bloquearUsuario() {
-            const desbloqueio = Date.now() + tempoBloqueio;
+            const desbloqueio = Date.now() + tempoBloqueio; // Calcula o tempo de desbloqueio
             let bloqueio = JSON.parse(localStorage.getItem('bloqueiof10')) || {};
-            bloqueio[ipUsuario] = desbloqueio;
-            localStorage.setItem('bloqueiof10', JSON.stringify(bloqueio));
-            iniciarContador(desbloqueio);
+            bloqueio[ipUsuario] = desbloqueio; // Associa o IP ao tempo de desbloqueio
+            localStorage.setItem('bloqueiof10', JSON.stringify(bloqueio)); // Salva no localStorage
+            iniciarContador(desbloqueio); // Atualiza o contador
 
+            // Desabilita interações durante o bloqueio
             const areaResposta = document.getElementById("area-resposta");
             const frasesEmbaralhadasDiv = document.getElementById("frases-embaralhadas");
             const verificarBotao = document.getElementById("verificar-ordem");
@@ -533,6 +537,8 @@
                     verificarBotao.disabled = false;
                     timerElement.style.display = "none";
                     document.getElementById("mensagem").style.display = "none";
+
+                    // Remove o bloqueio do localStorage
                     let bloqueio = JSON.parse(localStorage.getItem('bloqueiof10')) || {};
                     delete bloqueio[ipUsuario];
                     localStorage.setItem('bloqueiof10', JSON.stringify(bloqueio));
@@ -573,7 +579,7 @@
         });
         
         function atualizarContagemRegressiva() {
-            const destino = new Date("2025-05-15T23:59:00");
+            const destino = new Date("2025-05-22T23:59:00");
             const agora = new Date();
             const diferenca = destino - agora;
 
